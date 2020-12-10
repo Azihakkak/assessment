@@ -5,7 +5,26 @@ import React from "react";
 //   deodorant: { quantity: 3, price: 99.99 },
 // };
 
-export default function CartView({ cart }) {
+export default function CartView({ cart, tax }) {
+  const taxExcludedTotal = () => {
+    let totalPrice = 0;
+    Object.values(cart).map((item) => {
+      return (totalPrice += +item.price);
+    });
+    return totalPrice;
+  };
+
+  const calculateTax = () => {
+    const total = taxExcludedTotal();
+    return (total * +tax) % 100;
+  };
+
+  const taxIncludedTotal = () => {
+    const total = taxExcludedTotal();
+    const tax = calculateTax();
+    return total + tax;
+  };
+
   function renderTableData() {
     return Object.entries(cart).forEach(([key]) => {
       const name = key;
@@ -16,6 +35,8 @@ export default function CartView({ cart }) {
           <td>{name}</td>
           <td>{quantity}</td>
           <td>{price}</td>
+          <td>{calculateTax}</td>
+          <td>{taxIncludedTotal}</td>
         </tr>
       );
     });
@@ -24,7 +45,7 @@ export default function CartView({ cart }) {
   return (
     <div>
       <table>
-        <tbody>{renderTableData}</tbody>
+        <tbody>{renderTableData()}</tbody>
       </table>
     </div>
   );

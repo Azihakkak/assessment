@@ -14,6 +14,7 @@ export default class Shop extends Component {
       selectedItem: "Shower gel",
       itemQty: 1,
       cart: {},
+      tax: 12.5,
     };
   }
 
@@ -74,7 +75,7 @@ export default class Shop extends Component {
           </div>
           <input type="submit" value="Add to cart" />
         </form>
-        <CartView cart={this.state.cart} />
+        <CartView cart={this.state.cart} tax={this.state.tax} />
         {/* cart.item name cart.quantity cart.qty * price  */}
       </div>
     );
