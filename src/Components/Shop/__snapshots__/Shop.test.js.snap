@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shop component should render shop component 1`] = `
+<div>
+  <form
+    onSubmit={[Function]}
+  >
+    <label>
+      Select your item
+      <select
+        name="selectedItem"
+        onChange={[Function]}
+        value="Shower gel"
+      >
+        <option
+          value="Shower gel"
+        >
+          Shower gel
+        </option>
+        <option
+          value="Deodorant"
+        >
+          Deodorant
+        </option>
+      </select>
+    </label>
+    <div>
+      <input
+        name="itemQty"
+        onChange={[Function]}
+        type="number"
+        value={1}
+      />
+    </div>
+    <input
+      type="submit"
+      value="Add to cart"
+    />
+  </form>
+</div>
+`;
