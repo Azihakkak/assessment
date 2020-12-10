@@ -27,9 +27,11 @@ export default function CartView({ cart, tax }) {
 
   function renderTableData() {
     return Object.entries(cart).forEach(([key]) => {
+      console.log(key);
       const name = key;
       const quantity = cart[key].quantity;
       const price = cart[key].price;
+
       return (
         <tr key={name}>
           <td>{name}</td>
@@ -45,7 +47,7 @@ export default function CartView({ cart, tax }) {
   return (
     <div>
       <table>
-        <tbody>{renderTableData()}</tbody>
+        <tbody>{renderTableData}</tbody>
       </table>
     </div>
   );
