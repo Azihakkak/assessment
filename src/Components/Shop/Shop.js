@@ -7,6 +7,8 @@ const items = [
   { name: "Deodorant", price: 99.99, id: 2 },
 ];
 
+const taxRate = 12.5;
+
 export default class Shop extends Component {
   constructor() {
     super();
@@ -75,7 +77,7 @@ export default class Shop extends Component {
           </div>
           <input type="submit" value="Add to cart" />
         </form>
-        <CartView cart={this.state.cart} tax={this.state.tax} />
+        <CartView cart={this.state.cart} tax={taxRate}/>
         {/* cart.item name cart.quantity cart.qty * price  */}
       </div>
     );

@@ -2,32 +2,35 @@ import React from "react";
 
 // cart = {
 //   "shower gel": { quantity: 1, price: 49.99 },
-//   deodorant: { quantity: 3, price: 99.99 },
+//   "deodorant": { quantity: 3, price: 99.99 },
 // };
 
 export default function CartView({ cart, tax }) {
+  // console.log(cart);
   const taxExcludedTotal = () => {
     let totalPrice = 0;
-    Object.values(cart).map((item) => {
-      return (totalPrice += +item.price);
+    Object.values(cart).forEach((item) => {
+      totalPrice += +item.price * +item.quantity;
     });
     return totalPrice;
   };
 
   const calculateTax = () => {
     const total = taxExcludedTotal();
-    return (total * +tax) % 100;
+    //return console.log(total);
+    const result = (total * tax) / 100;
+    return (Math.ceil(result * 100 + Number.EPSILON) / 100).toPrecision(4);
   };
 
   const taxIncludedTotal = () => {
     const total = taxExcludedTotal();
     const tax = calculateTax();
-    return total + tax;
+    const result = total + +tax;
+    return result;
   };
 
   function renderTableData() {
-    return Object.entries(cart).forEach(([key]) => {
-      console.log(key);
+    return Object.entries(cart).map(([key]) => {
       const name = key;
       const quantity = cart[key].quantity;
       const price = cart[key].price;
@@ -37,8 +40,6 @@ export default function CartView({ cart, tax }) {
           <td>{name}</td>
           <td>{quantity}</td>
           <td>{price}</td>
-          <td>{calculateTax}</td>
-          <td>{taxIncludedTotal}</td>
         </tr>
       );
     });
@@ -47,8 +48,11 @@ export default function CartView({ cart, tax }) {
   return (
     <div>
       <table>
-        <tbody>{renderTableData}</tbody>
+        <tbody>{renderTableData()}</tbody>
       </table>
+      <h3>Total Tax: ${calculateTax()}</h3>
+      <h3>Total Price: ${taxExcludedTotal()}</h3>
+      <h3>Total Price Including Tax: ${taxIncludedTotal()}</h3>
     </div>
   );
 }
