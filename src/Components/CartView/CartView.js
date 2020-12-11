@@ -37,9 +37,9 @@ export default function CartView({ cart, tax }) {
 
       return (
         <tr key={name}>
-          <td>{name}</td>
-          <td>{quantity}</td>
-          <td>{price}</td>
+          <td data-testid="name">{name}</td>
+          <td data-testid="quantity">{quantity}</td>
+          <td data-testid="price">{price}</td>
         </tr>
       );
     });
