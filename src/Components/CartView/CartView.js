@@ -12,20 +12,20 @@ export default function CartView({ cart, tax }) {
     Object.values(cart).forEach((item) => {
       totalPrice += +item.price * +item.quantity;
     });
-    return totalPrice;
+    return (Math.ceil(totalPrice * 100 + Number.EPSILON) / 100).toFixed(2);
   };
 
   const calculateTax = () => {
     const total = taxExcludedTotal();
     //return console.log(total);
     const result = (total * tax) / 100;
-    return (Math.ceil(result * 100 + Number.EPSILON) / 100).toPrecision(4);
+    return (Math.ceil(result * 100 + Number.EPSILON) / 100).toFixed(2);
   };
 
   const taxIncludedTotal = () => {
     const total = taxExcludedTotal();
     const tax = calculateTax();
-    const result = total + +tax;
+    const result = +total + +tax;
     return result;
   };
 
@@ -52,7 +52,7 @@ export default function CartView({ cart, tax }) {
       </table>
       <h3>Total Tax: ${calculateTax()}</h3>
       <h3>Total Price: ${taxExcludedTotal()}</h3>
-      <h3>Total Price Including Tax: ${taxIncludedTotal()}</h3>
+      <h3>Total Price IncludingTax: ${taxIncludedTotal()}</h3>
     </div>
   );
 }

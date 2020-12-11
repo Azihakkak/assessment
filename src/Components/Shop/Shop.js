@@ -59,6 +59,7 @@ export default class Shop extends Component {
           <label>
             Select your item
             <select
+              data-testid="item-selection"
               value={this.state.selectedItem}
               onChange={this.handleChange}
               name="selectedItem"
@@ -69,15 +70,19 @@ export default class Shop extends Component {
           </label>
           <div>
             <input
+              data-testid="qty"
               name="itemQty"
               type="number"
               value={this.state.itemQty}
               onChange={this.handleChange}
             />
           </div>
-          <input type="submit" value="Add to cart" />
+          <input type="submit" value="Add to cart" data-testid="button" />
         </form>
-        <CartView cart={this.state.cart} tax={taxRate}/>
+        <div data-testid="cart-view">
+          <CartView cart={this.state.cart} tax={taxRate} />
+        </div>
+
         {/* cart.item name cart.quantity cart.qty * price  */}
       </div>
     );

@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<DocumentFragment>
+  <div>
+    <form>
+      <label>
+        Select your item
+        <select
+          data-testid="item-selection"
+          name="selectedItem"
+        >
+          <option
+            value="Shower gel"
+          >
+            Shower gel
+          </option>
+          <option
+            value="Deodorant"
+          >
+            Deodorant
+          </option>
+        </select>
+      </label>
+      <div>
+        <input
+          data-testid="qty"
+          name="itemQty"
+          type="number"
+          value="1"
+        />
+      </div>
+      <input
+        data-testid="button"
+        type="submit"
+        value="Add to cart"
+      />
+    </form>
+    <div>
+      <table>
+        <tbody />
+      </table>
+      <h3>
+        Total Tax: $0.01
+      </h3>
+      <h3>
+        Total Price: $0.01
+      </h3>
+      <h3>
+        Total Price IncludingTax: $0.02
+      </h3>
+    </div>
+  </div>
+</DocumentFragment>
+`;
