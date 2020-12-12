@@ -1,11 +1,15 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import Shop from "../Shop";
 import { render, fireEvent, cleanup } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
 import renderer from "react-test-renderer";
+import "@testing-library/jest-dom/extend-expect";
 
 afterEach(cleanup);
+
+it("snapshot", () => {
+  const tree = renderer.create(<Shop />).toJSON();
+  expect(tree).toMatchSnapshot();
+});
 
 it("renders correctly", () => {
   const { queryByTestId } = render(<Shop />);
@@ -14,7 +18,7 @@ it("renders correctly", () => {
   expect(queryByTestId("qty")).toBeTruthy();
 });
 
-describe("select value", () => {
+describe("Update value", () => {
   it("updates on change", () => {
     const { queryByTestId } = render(<Shop />);
 
@@ -26,7 +30,7 @@ describe("select value", () => {
   });
 });
 
-describe("select amount", () => {
+describe("Update quantity", () => {
   it("add quantity", () => {
     const { queryByTestId } = render(<Shop />);
 
@@ -43,17 +47,18 @@ describe("when user adds 5 Shower gels to the cart ", () => {
     const { queryByTestId, getByText } = render(<Shop />);
 
     const selectInput = queryByTestId("item-selection");
+    const inputQty = queryByTestId("qty");
+    const button = queryByTestId("button");
 
     fireEvent.change(selectInput, { target: { value: "Shower gel" } });
 
-    const inputQty = queryByTestId("qty");
-
     fireEvent.change(inputQty, { target: { value: "5" } });
-
-    const button = queryByTestId("button");
 
     fireEvent.click(button);
 
+    expect(queryByTestId("name")).toHaveTextContent("Item: Shower gel");
+    expect(getByText("Qty: 5")).toBeInTheDocument();
+    expect(getByText("UnitPrice: $49.99")).toBeInTheDocument();
     expect(getByText("Total Price: $249.95")).toBeInTheDocument();
   });
 });
@@ -62,26 +67,56 @@ describe("when user adds 5 Shower gels and again adds 3 more shower gels to the 
   it("should return showerGelQty: 8, unitPrice: 49.99, priceExcludingTax: 399.92 ", () => {
     const { queryByTestId, getByText } = render(<Shop />);
 
-    const selectInput = queryByTestId("item-selection");
+    let selectInput = queryByTestId("item-selection");
+    let inputQty = queryByTestId("qty");
+    let button = queryByTestId("button");
 
     fireEvent.change(selectInput, { target: { value: "Shower gel" } });
 
-    const inputQty = queryByTestId("qty");
-
     fireEvent.change(inputQty, { target: { value: "5" } });
-
-    const selectInput1 = queryByTestId("item-selection");
-
-    fireEvent.change(selectInput1, { target: { value: "Shower gel" } });
-
-    const inputQty2 = queryByTestId("qty");
-
-    fireEvent.change(inputQty2, { target: { value: "3" } });
-
-    const button = queryByTestId("button");
 
     fireEvent.click(button);
 
+    fireEvent.change(selectInput, { target: { value: "Shower gel" } });
+
+    fireEvent.change(inputQty, { target: { value: "3" } });
+
+    fireEvent.click(button);
+
+    expect(queryByTestId("name")).toHaveTextContent("Item: Shower gel");
+    expect(getByText("Qty: 8")).toBeInTheDocument();
+    expect(getByText("UnitPrice: $49.99")).toBeInTheDocument();
     expect(getByText("Total Price: $399.92")).toBeInTheDocument();
+  });
+});
+
+describe("User adds 2 Shower gels and then adds 2 Deodorants to the cart with tax rate 12.5", () => {
+  it("should return shower gel, qty:2, unitPrice: 49.99, Deodorant, qty:2, unitprice:99.99 Tax: 37.50, totalprice:337.46 ", () => {
+    const { queryByTestId, getByText, queryAllByTestId } = render(<Shop />);
+
+    let selectInput = queryByTestId("item-selection");
+    let inputQty = queryByTestId("qty");
+    let button = queryByTestId("button");
+
+    fireEvent.change(selectInput, { target: { value: "Shower gel" } });
+
+    fireEvent.change(inputQty, { target: { value: "2" } });
+
+    fireEvent.click(button);
+
+    fireEvent.change(selectInput, { target: { value: "Deodorant" } });
+
+    fireEvent.change(inputQty, { target: { value: "2" } });
+
+    fireEvent.click(button);
+
+    expect(getByText("Item: Shower gel")).toBeInTheDocument();
+    expect(getByText("Item: Deodorant")).toBeInTheDocument();
+    expect(queryAllByTestId("quantity")[0]).toHaveTextContent("2");
+    expect(queryAllByTestId("quantity")[1]).toHaveTextContent("2");
+    expect(getByText("UnitPrice: $49.99")).toBeInTheDocument();
+    expect(getByText("UnitPrice: $99.99")).toBeInTheDocument();
+    expect(getByText("Total Tax: $37.50")).toBeInTheDocument();
+    expect(getByText("Total Price IncludingTax: $337.46")).toBeInTheDocument();
   });
 });

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot 1`] = `
+<div>
+  <table>
+    <tbody>
+      <tr>
+        <td
+          data-testid="name"
+        >
+          Item: 
+          Shower gel
+        </td>
+        <td
+          data-testid="quantity"
+        >
+          Qty: 
+          5
+        </td>
+        <td
+          data-testid="price"
+        >
+          UnitPrice: $
+          49.99
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>
+    Total Tax: $
+    NaN
+  </h3>
+  <h3>
+    Total Price: $
+    249.95
+  </h3>
+  <h3>
+    Total Price IncludingTax: $
+    NaN
+  </h3>
+</div>
+`;

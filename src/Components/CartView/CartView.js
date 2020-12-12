@@ -1,12 +1,6 @@
 import React from "react";
 
-// cart = {
-//   "shower gel": { quantity: 1, price: 49.99 },
-//   "deodorant": { quantity: 3, price: 99.99 },
-// };
-
 export default function CartView({ cart, tax }) {
-  // console.log(cart);
   const taxExcludedTotal = () => {
     let totalPrice = 0;
     Object.values(cart).forEach((item) => {
@@ -17,7 +11,6 @@ export default function CartView({ cart, tax }) {
 
   const calculateTax = () => {
     const total = taxExcludedTotal();
-    //return console.log(total);
     const result = (total * tax) / 100;
     return (Math.ceil(result * 100 + Number.EPSILON) / 100).toFixed(2);
   };
@@ -37,9 +30,9 @@ export default function CartView({ cart, tax }) {
 
       return (
         <tr key={name}>
-          <td data-testid="name">{name}</td>
-          <td data-testid="quantity">{quantity}</td>
-          <td data-testid="price">{price}</td>
+          <td data-testid="name">Item: {name}</td>
+          <td data-testid="quantity">Qty: {quantity}</td>
+          <td data-testid="price">UnitPrice: ${price}</td>
         </tr>
       );
     });

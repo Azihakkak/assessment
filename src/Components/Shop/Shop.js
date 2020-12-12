@@ -16,7 +16,6 @@ export default class Shop extends Component {
       selectedItem: "Shower gel",
       itemQty: 1,
       cart: {},
-      tax: 12.5,
     };
   }
 
@@ -82,13 +81,7 @@ export default class Shop extends Component {
         <div data-testid="cart-view">
           <CartView cart={this.state.cart} tax={taxRate} />
         </div>
-
-        {/* cart.item name cart.quantity cart.qty * price  */}
       </div>
     );
   }
 }
-
-// user adds 5 shower gels to the cart
-// shopping cart should show 5 shower gels with unit price
-// total price should be 249.95
