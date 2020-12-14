@@ -6,40 +6,29 @@ import "@testing-library/jest-dom/extend-expect";
 
 afterEach(cleanup);
 
-it("snapshot", () => {
+it("Renders correctly", () => {
   const tree = renderer.create(<Shop />).toJSON();
   expect(tree).toMatchSnapshot();
 });
 
-it("renders correctly", () => {
+it("Should update selected item", () => {
   const { queryByTestId } = render(<Shop />);
 
-  expect(queryByTestId("item-selection")).toBeTruthy();
-  expect(queryByTestId("qty")).toBeTruthy();
+  const selectInput = queryByTestId("item-selection");
+
+  fireEvent.change(selectInput, { target: { value: "Shower gel" } });
+
+  expect(selectInput.value).toBe("Shower gel");
 });
 
-describe("Update value", () => {
-  it("updates on change", () => {
-    const { queryByTestId } = render(<Shop />);
+it("Should update item quantity", () => {
+  const { queryByTestId } = render(<Shop />);
 
-    const selectInput = queryByTestId("item-selection");
+  const inputQty = queryByTestId("qty");
 
-    fireEvent.change(selectInput, { target: { value: "Shower gel" } });
+  fireEvent.change(inputQty, { target: { value: "5" } });
 
-    expect(selectInput.value).toBe("Shower gel");
-  });
-});
-
-describe("Update quantity", () => {
-  it("add quantity", () => {
-    const { queryByTestId } = render(<Shop />);
-
-    const inputQty = queryByTestId("qty");
-
-    fireEvent.change(inputQty, { target: { value: "5" } });
-
-    expect(inputQty.value).toBe("5");
-  });
+  expect(inputQty.value).toBe("5");
 });
 
 describe("when user adds 5 Shower gels to the cart ", () => {

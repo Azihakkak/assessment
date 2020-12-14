@@ -1,18 +1,25 @@
 import React from "react";
 
+const hundred = 100;
+const roundedDecimal = 2;
+
 export default function CartView({ cart, tax }) {
   const taxExcludedTotal = () => {
     let totalPrice = 0;
     Object.values(cart).forEach((item) => {
       totalPrice += +item.price * +item.quantity;
     });
-    return (Math.ceil(totalPrice * 100 + Number.EPSILON) / 100).toFixed(2);
+    return (Math.ceil(totalPrice * hundred + Number.EPSILON) / hundred).toFixed(
+      roundedDecimal
+    );
   };
 
   const calculateTax = () => {
     const total = taxExcludedTotal();
-    const result = (total * tax) / 100;
-    return (Math.ceil(result * 100 + Number.EPSILON) / 100).toFixed(2);
+    const result = (total * tax) / hundred;
+    return (Math.ceil(result * hundred + Number.EPSILON) / hundred).toFixed(
+      roundedDecimal
+    );
   };
 
   const taxIncludedTotal = () => {

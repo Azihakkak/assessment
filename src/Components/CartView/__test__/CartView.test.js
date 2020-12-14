@@ -6,7 +6,7 @@ import CartView from "../CartView";
 
 afterEach(cleanup);
 
-it("snapshot", () => {
+it("Should render one item", () => {
   const tree = renderer
     .create(<CartView cart={{ "Shower gel": { quantity: 5, price: 49.99 } }} />)
     .toJSON();
@@ -14,29 +14,7 @@ it("snapshot", () => {
   expect(tree).toMatchSnapshot();
 });
 
-it("renders result", () => {
-  const { getByText } = render(
-    <CartView cart={{ "Shower gel": { quantity: 5, price: 49.99 } }} />
-  );
-
-  expect(getByText("Item: Shower gel")).toBeInTheDocument();
-  expect(getByText("Qty: 5")).toBeInTheDocument();
-  expect(getByText("UnitPrice: $49.99")).toBeInTheDocument();
-  expect(getByText("Total Price: $249.95")).toBeInTheDocument();
-});
-
-it("renders result", () => {
-  const { getByText } = render(
-    <CartView cart={{ "Shower gel": { quantity: 8, price: 49.99 } }} />
-  );
-
-  expect(getByText("Item: Shower gel")).toBeInTheDocument();
-  expect(getByText("Qty: 8")).toBeInTheDocument();
-  expect(getByText("UnitPrice: $49.99")).toBeInTheDocument();
-  expect(getByText("Total Price: $399.92")).toBeInTheDocument();
-});
-
-it("renders result", () => {
+it("Should show 2 items in the cart", () => {
   const { getByText, queryAllByTestId } = render(
     <CartView
       cart={{

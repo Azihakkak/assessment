@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`snapshot 1`] = `
+exports[`Renders correctly 1`] = `
 <div>
   <form
     onSubmit={[Function]}
